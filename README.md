@@ -18,6 +18,6 @@
 ------------------------------
 主界面截图：
 ------------------------------
-![img](https://vip.123pan.cn/1816369032/assets/52pojie/Clip_20230923_153432.png)
-![img](https://vip.123pan.cn/1816369032/assets/52pojie/Clip_20230923_153555.png)
-![img](https://vip.123pan.cn/1816369032/assets/52pojie/Clip_20230923_153724.png)
+![img](assets/main.png)
+![img](assets/util.png)
+![img](assets/all_sub_main.png)
