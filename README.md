@@ -58,7 +58,7 @@ src/wh_mod/convert.rs 中的  `convert_dat_images_buff`  `convert_bat_images` �
 
 其实解码过程非常简单 您可以从其他用户分享的代码中轻易获取到解码的算法 您可以参考  [算法参考(C#)](https://www.52pojie.cn/forum.php?mod=viewthread&tid=1507922&highlight=dat)      [算法参考(py)](https://www.52pojie.cn/forum.php?mod=viewthread&tid=1814264&highlight=dat)   [算法参考(易语言)](https://www.52pojie.cn/forum.php?mod=viewthread&tid=1457843&highlight=dat) 
 
-君子协议：**不盈利**   **不越权**   **不破解 **  **不跨设备**   **只允许当前用户**
+君子协议：**不盈利**   **不越权**   **不破解**  **不跨设备**   **只允许当前用户**
 
 
 
