@@ -13,52 +13,71 @@ use std::sync::OnceLock;
 use std::thread;
 use std::time::{SystemTime, UNIX_EPOCH};
 use std::{collections::hash_map::HashMap, ptr};
+use lazy_static::lazy_static;
+use std::collections::HashSet;
+use std::sync::Mutex;
+use std::sync::MutexGuard;
 
+lazy_static! {
+    static ref WALK_ATTACH_FILE_LIST: Mutex<HashMap<String, Vec<PathBuf>>> = Mutex::new(HashMap::new());
+}
 //  全局扫描 attach 里面的文件的存放变量 请注意只能初始化一次 （傻逼rust）
-static WALK_ATTACH_FILE: OnceLock<HashMap<String, Vec<PathBuf>>> = OnceLock::new();
-static WALK_ATTACH_FILE2: OnceLock<HashMap<String, Vec<PathBuf>>> = OnceLock::new();
-static WALK_ATTACH_FILE3: OnceLock<HashMap<String, Vec<PathBuf>>> = OnceLock::new();
-static WALK_ATTACH_FILE4: OnceLock<HashMap<String, Vec<PathBuf>>> = OnceLock::new();
+// static WALK_ATTACH_FILE: OnceLock<HashMap<String, Vec<PathBuf>>> = OnceLock::new();
+// static WALK_ATTACH_FILE2: OnceLock<HashMap<String, Vec<PathBuf>>> = OnceLock::new();
+// static WALK_ATTACH_FILE3: OnceLock<HashMap<String, Vec<PathBuf>>> = OnceLock::new();
+// static WALK_ATTACH_FILE4: OnceLock<HashMap<String, Vec<PathBuf>>> = OnceLock::new();
 
 //  写入全局扫描 attach 里面的文件的存放变量 请注意只能初始化一次
-pub fn set_walk_attach_file(value: HashMap<String, Vec<PathBuf>>) {
-    macro_rules! set_value {
-        ($data:expr) => {
-            if $data.get().is_none() {
-                match $data.set(value) {
-                    Ok(_) => {},
-                    Err(_) => {},
-                }
-                return;
-            }
-        };
-    }
-    set_value!(WALK_ATTACH_FILE);
-    set_value!(WALK_ATTACH_FILE2);
-    set_value!(WALK_ATTACH_FILE3);
-    set_value!(WALK_ATTACH_FILE4);
+// pub fn set_walk_attach_file(value: HashMap<String, Vec<PathBuf>>) {
+//     macro_rules! set_value {
+//         ($data:expr) => {
+//             if $data.get().is_none() {
+//                 match $data.set(value) {
+//                     Ok(_) => {},
+//                     Err(_) => {},
+//                 }
+//                 return;
+//             }
+//         };
+//     }
+//     set_value!(WALK_ATTACH_FILE);
+//     set_value!(WALK_ATTACH_FILE2);
+//     set_value!(WALK_ATTACH_FILE3);
+//     set_value!(WALK_ATTACH_FILE4);
+// }
+
+pub fn gc_walk_attach_file_list(){
+    let mut lazy_value = WALK_ATTACH_FILE_LIST.lock().unwrap();
+    lazy_value.clear();
+    drop(lazy_value);
 }
 
 pub fn get_walk_attach_file() -> HashMap<String, Vec<PathBuf>> {
     let mut result = HashMap::new();
-    macro_rules! get_result_value {
-        ($data:expr) => {
-            match $data.get() {
-                Some(data2) => {
-                    for (key, data) in data2.iter() {
-                        result.insert(key.to_string(), data.to_vec());
-                    }
-                }
-                _ =>{
-
-                },
-            };
-        };
+    let mut lazy_value = WALK_ATTACH_FILE_LIST.lock().unwrap();
+    for (key,value) in lazy_value.iter() {
+        result.insert(key.to_string(), value.clone());
     }
-    get_result_value!(WALK_ATTACH_FILE);
-    get_result_value!(WALK_ATTACH_FILE2);
-    get_result_value!(WALK_ATTACH_FILE3);
-    get_result_value!(WALK_ATTACH_FILE4);
+    drop(lazy_value);
+
+    // macro_rules! get_result_value {
+    //     ($data:expr) => {
+    //         match $data.get() {
+    //             Some(data2) => {
+    //                 for (key, data) in data2.iter() {
+    //                     result.insert(key.to_string(), data.to_vec());
+    //                 }
+    //             }
+    //             _ =>{
+
+    //             },
+    //         };
+    //     };
+    // }
+    // get_result_value!(WALK_ATTACH_FILE);
+    // get_result_value!(WALK_ATTACH_FILE2);
+    // get_result_value!(WALK_ATTACH_FILE3);
+    // get_result_value!(WALK_ATTACH_FILE4);
 
     result
 }
@@ -690,7 +709,23 @@ pub fn walk_file(
         wk_list.insert(key, data_vec);
     }
 
-    set_walk_attach_file(wk_list.clone());
+    // set_walk_attach_file(wk_list.clone());
+    let mut lazy_value = WALK_ATTACH_FILE_LIST.lock().unwrap();
+    
+    for (key,value) in wk_list.iter() {
+        match  lazy_value.insert(key.to_string(), value.clone()) {
+            std::option::Option::Some(_)=>{
+
+            }
+            // std::option::Option::None()=>{
+
+            // }
+            _=>{}
+        };
+    }
+
+    drop(lazy_value);
+
     return wk_list;
 }
 

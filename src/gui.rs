@@ -709,21 +709,7 @@ pub fn mianWindow(show: bool) -> Result<MianWindowItme> {
                         let mut path_dir = parse_dat_path(input_shellOpenDatDir.buff.text());
 
                         has_inputPath = true;
-
-                        // println!("exists[Image file]-> {:?}",path_dir.exists("D:\\usersData\\weixin\\WeChat Files\\wxid_y9bheozsb69u22\\FileStorage\\MsgAttach\\2884b16eab96dbe78e87c7a36caa70ae\\Image\\2023-09\\6f000bea7a57e64a590607ecf81995e5.dat".to_string()));
-                        // println!("exists[Image dir]-> {:?}",path_dir.exists("D:\\usersData\\weixin\\WeChat Files\\wxid_y9bheozsb69u22/FileStorage\\MsgAttach\\2884b16eab96dbe78e87c7a36caa70ae\\Image\\2023-09".to_string()));
-                        // println!("exists[Thumb Thumb]-> {:?}",path_dir.exists("D:\\usersData\\weixin\\WeChat Files\\wxid_y9bheozsb69u22\\\\FileStorage\\MsgAttach\\2884b16eab96dbe78e87c7a36caa70ae\\Thumb\\2023-09\\ff5013200205702cd505a04ec0636537_t.dat".to_string()));
-                        // println!("exists[Thumb dir]-> {:?}",path_dir.exists("D:\\usersData\\weixin\\WeChat Files\\wxid_y9bheozsb69u22\\/FileStorage\\MsgAttach\\2884b16eab96dbe78e87c7a36caa70ae\\Thumb\\2023-09".to_string()));
-
-                        // println!("exists[other-month Image file]-> {:?}",path_dir.exists("D:\\usersData\\weixin\\WeChat Files\\wxid_y9bheozsb69u22\\FileStorage\\MsgAttach\\2884b16eab96dbe78e87c7a36caa70ae\\Image\\2023-08\\6f000bea7a57e64a590607ecf81995e5.dat".to_string()));
-                        // println!("exists[other-month Image dir]-> {:?}",path_dir.exists("D:\\usersData\\weixin\\WeChat Files\\wxid_y9bheozsb69u22\\FileStorage\\MsgAttach\\2884b16eab96dbe78e87c7a36caa70ae\\Image\\2023-05".to_string()));
-                        // println!("exists[other-month Thumb Thumb]-> {:?}",path_dir.exists("D:\\usersData\\weixin\\WeChat Files\\wxid_y9bheozsb69u22\\FileStorage\\MsgAttach\\2884b16eab96dbe78e87c7a36caa70ae\\Thumb\\2023-11\\ff5013200205702cd505a04ec0636537_t.dat".to_string()));
-                        // println!("exists[other-month Thumb dir]-> {:?}",path_dir.exists("D:\\usersData\\weixin\\WeChat Files\\wxid_y9bheozsb69u22\\FileStorage\\MsgAttach\\2884b16eab96dbe78e87c7a36caa70ae\\Thumb\\2023-10".to_string()));
-
-
-                        // println!("exists[other file]-> {:?}",path_dir.exists("D:\\usersData\\weixin\\WeChat Files\\wxid_y9bheozsb69u22\\FileStorage\\MsgAttach\\2fbfee4fc1e474f42532bb8e6969a02e\\Thumb\\2023-06\\433f57e7864e3deb47e41b997d810f18_t.dat".to_string()));
-                        // println!("exists[other file]-> {:?}",path_dir.exists("D:\\usersData\\weixin\\WeChat Files\\wxid_y9bheozsb69u22\\FileStorage\\MsgAttach\\15351c4576d43744817d4d133c84783e\\Thumb\\2023-06\\a9c66f57cf40bc0b694dd499da776397_t.dat".to_string()));
-
+                        
                         match fs::metadata(path_dir.attach_dir.clone()) {
                             Ok(metadata) => {
                                 if (!metadata.is_dir()) {

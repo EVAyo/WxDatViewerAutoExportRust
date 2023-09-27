@@ -107,7 +107,7 @@ pub fn watch_path_puppet(dir_path: String, send_main_tx: mpsc::Sender<PathBuf>) 
             match res {
                 Ok(event) => {
                     for value in event.clone().paths {
-                        let mut paths = value.clone().display().to_string();
+                        // let mut paths = value.clone().display().to_string();
                         let mut ext = util::path_extension(&value);
 
                         // 是文件 后缀是dat 更新方式是修改
